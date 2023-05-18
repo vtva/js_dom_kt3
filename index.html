@@ -1,0 +1,175 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Слайдер</title>
+        <style>
+            header {
+                background-color: #5c5af3; 
+                color: white;   
+                padding: 30px;
+            }
+            .header_lefttext {
+                text-align: left;
+                font-size: xx-large;
+                display: inline-block;
+            }
+            .header_righttext {
+                margin-top: 10px;
+                float: right;
+                font-size: medium;
+                display: inline-block;
+            }
+            .main_container {
+                padding-top: 50px;
+                text-align: center;
+            }
+            label#rangeValue {
+                font-size: 32px;
+                font-weight: bold;
+                color: #5c5af3;
+            }
+            input[type=range] {
+                height: 40px;
+                -webkit-appearance: none;
+                margin: 30px 0;
+                width: 60%;
+            }
+            input[type=range]:focus {
+                outline: none;
+            }
+            input[type=range]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 11px;
+                cursor: pointer;
+                animate: 0.2s;
+                box-shadow: 1px 1px 1px #000000;
+                background: #59AF50;
+                border-radius: 1px;
+                border: 0px solid #010101;
+            }
+            input[type=range]::-webkit-slider-thumb {
+                box-shadow: 1px 1px 1px #000031;
+                border: 1px solid #00001E;
+                height: 32px;
+                width: 32px;
+                border-radius: 15px;
+                background: #59AF50;
+                cursor: pointer;
+                -webkit-appearance: none;
+                margin-top: -11px;
+            }
+            input[type=range]:focus::-webkit-slider-runnable-track {
+                background: #59AF50;
+            }
+            input[type=range]::-moz-range-track {
+                width: 100%;
+                height: 11px;
+                cursor: pointer;
+                animate: 0.2s;
+                box-shadow: 1px 1px 1px #000000;
+                background: #59AF50;
+                border-radius: 1px;
+                border: 0px solid #010101;
+            }
+            input[type=range]::-moz-range-thumb {
+                box-shadow: 1px 1px 1px #000031;
+                border: 1px solid #00001E;
+                height: 32px;
+                width: 32px;
+                border-radius: 15px;
+                background: #59AF50;
+                cursor: pointer;
+            }
+            input[type=range]::-ms-track {
+                width: 100%;
+                height: 11px;
+                cursor: pointer;
+                animate: 0.2s;
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+            input[type=range]::-ms-fill-lower {
+                background: #59AF50;
+                border: 0px solid #010101;
+                border-radius: 2px;
+                box-shadow: 1px 1px 1px #000000;
+            }
+            input[type=range]::-ms-fill-upper {
+                background: #59AF50;
+                border: 0px solid #010101;
+                border-radius: 2px;
+                box-shadow: 1px 1px 1px #000000;
+            }
+            input[type=range]::-ms-thumb {
+                margin-top: 1px;
+                box-shadow: 1px 1px 1px #000031;
+                border: 1px solid #00001E;
+                height: 32px;
+                width: 32px;
+                border-radius: 15px;
+                background: #59AF50;
+                cursor: pointer;
+            }
+            input[type=range]:focus::-ms-fill-lower {
+                background: #59AF50;
+            }
+            input[type=range]:focus::-ms-fill-upper {
+                background: #59AF50;
+            }
+        </style>
+	</head>
+	<body onload="pageLoad()">
+        <script>
+            const startValue = 50;
+            const minValue = 20;
+            const maxValue = 80;
+            let isMouseMove = false;
+
+            function pageLoad(){               
+                document.querySelector("#rangeValue").innerHTML = startValue;
+
+                let rangeBar = document.querySelector("#rangeBar");
+                rangeBar.addEventListener("mousedown", rangeChange);
+                rangeBar.addEventListener("mouseup", rangeChange);
+                rangeBar.addEventListener("mousemove", rangeChange);
+                rangeBar.value = startValue;
+            };
+            
+            function applyRangeLimit(rangeBar){
+                if (rangeBar.value < minValue) rangeBar.value = minValue
+                else if (rangeBar.value > maxValue) rangeBar.value = maxValue;
+            }
+            
+            function rangeChange(event){
+                let rangeBar = document.querySelector("#rangeBar");
+                
+                switch (event.type) {
+                    case "mousedown":
+                        isMouseMove = true;
+                        break;
+                    case "mouseup":
+                        isMouseMove = false;                        
+                        applyRangeLimit(rangeBar);
+                        break;
+                    case "mousemove":
+                        if (isMouseMove) {
+                            applyRangeLimit(rangeBar);
+                        };
+                        break;
+                };
+                
+                document.querySelector("#rangeValue").innerHTML = rangeBar.value;
+            };            
+        </script>        
+        <header>            
+            <div class="header_lefttext">Слайдер</div>                
+            <div class="header_righttext">Воронов Александр Анатольевич</div>            
+        </header>        
+        <div class="main_container">
+            <label id="rangeValue" for="rangeBar"></label>
+            <br>
+            <input id="rangeBar" type="range" min="0" max="100" name="range">
+        </div>
+    </body>
+</html>
